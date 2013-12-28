@@ -1,0 +1,179 @@
+structure
+
+
+
+deps
+	gl-matrix
+	kami
+		number-util
+	assetloader (working title)
+	klasse
+	js-signals
+
+
+goals:
+	simple path and billboard rendering for 2D/3D
+	allow user to plugin cool shit if WebGL is supported..
+	proper GL context management
+	allow multiple GL contexts, canvases, etc together
+	sprite sheet (separate lib)
+
+
+lib
+	Color
+
+
+
+
+MAIN GOALS:
+	- 2D and 3D line / point / sprite rendering
+	- procedural textures
+	- support for multiple contexts,
+
+
+Blend Modes
+	- MULTIPLY
+	- LIGHTEN
+	- SCREEN
+	- etc.
+
+SpriteBatch2D
+	- already done in WebGL
+	- canvas supports tint through an off-screen buffer
+	- blend modes 
+
+SpriteBatch3D
+
+
+
+
+------------------------------------------
+
+
+A true test:
+ -- TRON-like graphics, GTA2 car physics, Uplink gameplay
+    black screen, glowy lights (neon / tokyo)
+    3D buildings in wireframe
+
+Builds on:
+	cam3d
+		A minimal NPM module for 3D graphics in Canvas/WebGL
+		Uses gl-matrix.
+
+		- project
+		- unproject
+		- camera.rotation.xyz
+		- camera.position.xyz
+		- camera.scale.xyz
+			- (needs camera.update() after)
+
+	kami
+		WebGL backend
+
+	tintin
+		- Real-time image tinting in Canvas
+
+
+
+-----------
+
+hacker game:
+	NPM module for fake command-line apps 
+
+
+
+
+----------
+
+
+
+
+
+
+HOW does it all come together ???
+Many small packages with different names? That will get scattered, won't it?
+Many small packages with "kami-" prefix? Damn that seems ugly.
+A single big package that goes against NPM practices?
+
+
+MeshRenderer
+ShapeRenderer
+SpriteSheet
+BitmapFont
+BitmapFontGenerator --> through Canvas text
+TexturePackerLoader
+BMFontLoader
+Color
+
+CANVAS FALLBACK - how the fuck will that work?
+
+more game specific stuff - 
+TiledMap
+Scenegraph
+	Group
+	Sprite
+	Container
+UI ? 
+
+And then high level stuff like Image2D which is renderer-independent
+
+Maybe best to use a single package like "bento" which doesn't strictly follow NPM standards. 
+
+
+var AssetLoader = require('bento').AssetLoader;
+var Image2D = require('bento').Image2D;
+var BitmapFont = require('bento').BitmapFont;
+var createCanvas = require('bento').createCanvas;
+
+
+var canvas = createCanvas(250, 250);
+
+var img = new Image2D(canvas, "test.png");
+var bmfont = new BitmapFont(canvas, "")
+var sprite = new Sprite(img);
+
+UGH but then what about multiple 2D canvases? they can share textures unlike webgl canvases...
+Maybe better to have Image2D be very lightweight, and all the tex loading is done inside the renderer like PIXI. e.g.
+
+
+//this doesn't load anything
+var img = new Image2D("test.png"); 
+
+[optional]
+renderer
+	load(img)
+	unload(img)
+
+renderer
+	drawImage(img)
+	drawPolygon(..)
+	drawCircle
+	drawRect
+	etc.
+
+
+
+////// or how about..
+
+var bento = new BentoCanvas(250, 250);
+
+var renderer = new Renderer(bento);
+var img = new Image2D(bento, "test.png");
+var fbo = new bento.RenderTexture(256, 256);
+
+var redSquare = new bento.Image2D(256, 256, [255, 0, 0, 255]);
+
+renderer.renderTexture = fbo; // start drawing to offscreen buffer
+renderer.clear();
+
+renderer.shader = myShader; // 
+
+renderer.translate(250, 250);
+renderer.drawImage(img);
+renderer.fillRect(0, 0, 250, 250);
+
+renderer.renderTexture = null; // reset to screen buffer
+renderer.clear();
+
+renderer.drawImage(fbo);
+

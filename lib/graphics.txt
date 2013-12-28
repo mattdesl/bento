@@ -1,0 +1,39 @@
+more structure
+
+Here's what WOULD be nice...
+Graphics2D
+	fillRect()
+	drawRect()
+	fillCircle()
+	drawCircle()
+	drawLine()
+	drawPolygon() <-- accepts a Polygon object which can be pre-triangulated for WebGL
+	drawImage()
+	drawArc()
+	drawQuadraticCurve()
+	drawBezierCurve()
+	setColor()
+
+	drawCustom()      <-- accepts a callback for canvas and gl rendering, respectively
+	drawImageTiled()  <-- draws a texture, tiled
+	drawGradient()    <-- draws a linear or radial gradient, 2 stops only
+
+	lineThickness
+	lineCap
+	lineJoin
+	lineCurveSteps
+
+
+Here's what's more REALISTIC for now....
+Graphics2D
+	fillRect
+	drawRect
+	drawLine
+	drawImage
+	drawImageTiled
+	drawCustom
+
+	setColor
+
+	lineThickness
+	

@@ -1,0 +1,36 @@
+More structure
+--------------
+
+
+
+bento/lib/
+	Color
+	Renderer
+
+
+
+
+var renderer = autoDetectRenderer(250, 250);
+
+canvas / webgl
+	blendMode = BlendMode.ADD, NORMAL, SCREEN, MULTIPLY (?)
+	setClip   - rectangular clipping region
+	clearClip 
+	drawImage 
+	setTint   - sets RGB color tint, simple multiply
+	setAlpha  - sets alpha
+	clear     - clears the screen
+	blendingEnabled  - if disabled in canvas, it just uses 'copy' ???
+	fillRect
+	drawRect
+	
+
+
+canvas
+	cacheTints - default true; new tints will be cached based on RGB bytes. 
+				 if you have lots of tinting going on you might want to set this to false,
+				 it will use a secondary canvas to draw. but that may also be inefficient. 
+
+webgl
+	shader 
+
