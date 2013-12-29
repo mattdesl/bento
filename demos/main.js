@@ -65,7 +65,7 @@ domready(function() {
     
     TintCache.DEFAULT_COMPOSITING = true;
     TintCache.DEFAULT_FUZZINESS = 0;
-    TintCache.DEFAULT_MAX_TINTS = 255;
+    TintCache.DEFAULT_MAX_TINTS = 1;
 
     setInterval(function() {
         console.log(img.tintCache != null ? img.tintCache.countActiveTints() : "");
@@ -88,8 +88,8 @@ domready(function() {
 
         // console.profile("tint");
         // var start = performance.now();
-        // renderer.setTint( ~~(Math.random()*255), ~~(Math.random()*255), ~~(Math.random()*255) );
-        renderer.setTint(255, 0, 0);
+        renderer.setTint( ~~(Math.random()*255), ~~(Math.random()*255), ~~(Math.random()*255) );
+        // renderer.setTint(255, 0, 0);
         renderer.drawImage(img, 0, 0);
         // var t = (performance.now() - start);
         // console.profileEnd("tint");
