@@ -32,7 +32,7 @@ domready(function() {
     document.body.style.margin = "0";
     document.body.style.background = "#aaa";
 
-    var img = new Image2D(renderer, "img/test.png", render);
+    var img = new Image2D(renderer, "img/default.png", render);
 
     var fps = stats.create();
     fps.style.position = "fixed";
@@ -64,8 +64,8 @@ domready(function() {
     // renderer.tintCaching = false;
     
     TintCache.DEFAULT_COMPOSITING = false;
-    TintCache.DEFAULT_FUZZINESS = 0;
-    TintCache.DEFAULT_MAX_TINTS = 255;
+    TintCache.DEFAULT_FUZZINESS = 4;
+    TintCache.DEFAULT_MAX_TINTS = 300;
 
     setInterval(function() {
         console.log(img.tintCache != null ? img.tintCache.countActiveTints() : "");
@@ -78,27 +78,21 @@ domready(function() {
         aVal = 0;
 
     function render() {
-        setTimeout(render, 1000);
 
-        stats.begin();
-
-        renderer.clear();
-
-
-
-        // console.profile("tint");
-        // var start = performance.now();
-        // renderer.setTint( ~~(Math.random()*255), ~~(Math.random()*255), ~~(Math.random()*255) );
-        renderer.setTint(255, 0, 0);
+        renderer.setTint("blue");
         renderer.drawImage(img, 0, 0);
-        // var t = (performance.now() - start);
+        renderer.clear();
+        
+        // console.profile("tint");
+        var start = performance.now();
+        renderer.setTint("red");
+        renderer.drawImage(img, 0, 0);
+        var t = (performance.now() - start);
         // console.profileEnd("tint");
 
-        // console.log("Total time:", t);
+        console.log("Total time:", t);
 
         renderer.flush();
-
-        stats.end(fps);
     }
 
     // function render() {
