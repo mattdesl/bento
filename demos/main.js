@@ -30,7 +30,7 @@ domready(function() {
     var renderer = new CanvasRenderer(500, 500);
     document.body.appendChild(renderer.view);
     document.body.style.margin = "0";
-    document.body.style.background = "#aaa";
+    document.body.style.background = "white";
 
     var img = new Image2D(renderer, "img/test.png", render);
 
@@ -38,7 +38,7 @@ domready(function() {
     fps.style.position = "fixed";
     fps.style.top = "0";
     fps.style.color = "#fff";
-    document.body.appendChild(fps);
+    // document.body.appendChild(fps);
 
 
     // function render() {
@@ -63,7 +63,7 @@ domready(function() {
     // img.tintCache = new TintCache(260);
     // renderer.tintCaching = false;
     
-    TintCache.DEFAULT_COMPOSITING = false;
+    TintCache.DEFAULT_COMPOSITING = true;
     TintCache.DEFAULT_FUZZINESS = 0;
     TintCache.DEFAULT_MAX_TINTS = 255;
 
